@@ -1,0 +1,36 @@
+﻿生成启动时间为 2016/6/30 16:51:35。
+     1>项目“E:\vcprj\everywhere\everywhere\everywhere.vcxproj”在节点 2 上(build 个目标)。
+     1>PrepareForBuild:
+         正在创建目录“E:\vcprj\everywhere\everywhere\Win32\Debug\”。
+       InitializeBuildStatus:
+         正在创建“Debug\everywhere.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       CustomBuild:
+         Rcc'ing everywhere.qrc...
+     1>RCC : warning : No resources in 'E:\vcprj\everywhere\everywhere\everywhere.qrc'.
+         
+         Moc'ing everywhere.h...
+         Uic'ing ui\everywhere.ui...
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /ID:\Qt\4.8.5\include /I.\GeneratedFiles\Debug /ID:\Qt\4.8.5\include\QtCore /ID:\Qt\4.8.5\include\QtGui /ID:\Qt\4.8.5\include\QtSql /ID:\Qt\4.8.5\include\QtOpenGL /ID:\Qt\4.8.5\include\QtNetwork /ID:\Qt\4.8.5\include\QtWebKit /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_SQL_LIB /D QT_OPENGL_LIB /D QT_NETWORK_LIB /D QT_WEBKIT_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\Debug\moc_everywhere.cpp source\everywhere.cpp source\main.cpp
+         moc_everywhere.cpp
+         everywhere.cpp
+         main.cpp
+         正在生成代码...
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /ID:\Qt\4.8.5\include /I.\GeneratedFiles\Debug /ID:\Qt\4.8.5\include\QtCore /ID:\Qt\4.8.5\include\QtGui /ID:\Qt\4.8.5\include\QtSql /ID:\Qt\4.8.5\include\QtOpenGL /ID:\Qt\4.8.5\include\QtNetwork /ID:\Qt\4.8.5\include\QtWebKit /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_SQL_LIB /D QT_OPENGL_LIB /D QT_NETWORK_LIB /D QT_WEBKIT_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t- /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GeneratedFiles\qrc_everywhere.cpp
+         qrc_everywhere.cpp
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\vcprj\everywhere\everywhere\Win32\Debug\\everywhere.exe" /NOLOGO /LIBPATH:D:\Qt\4.8.5\lib qtmaind.lib QtCored4.lib QtGuid4.lib QtSqld4.lib QtOpenGLd4.lib opengl32.lib glu32.lib QtNetworkd4.lib QtWebKitd4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\everywhere.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\vcprj\everywhere\everywhere\Win32\Debug\everywhere.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\vcprj\everywhere\everywhere\Win32\Debug\everywhere.lib" /MACHINE:X86 Debug\moc_everywhere.obj
+         Debug\qrc_everywhere.obj
+         Debug\everywhere.obj
+         Debug\main.obj
+         everywhere.vcxproj -> E:\vcprj\everywhere\everywhere\Win32\Debug\everywhere.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\vcprj\everywhere\everywhere\Win32\Debug\\everywhere.exe;#1" /manifest Debug\everywhere.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         正在删除文件“Debug\everywhere.unsuccessfulbuild”。
+         正在对“Debug\everywhere.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“E:\vcprj\everywhere\everywhere\everywhere.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:10.54

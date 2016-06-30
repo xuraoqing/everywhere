@@ -1,0 +1,1 @@
+int NCS_init(void)
