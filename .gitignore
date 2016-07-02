@@ -1,2 +1,3 @@
 *.obj
-*.tlog 
+*.tlog
+/everywhere project document
