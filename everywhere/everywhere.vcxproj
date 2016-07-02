@@ -35,6 +35,8 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\vcprj\everywhere\everywhere\source;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\vcprj\everywhere\everywhere;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -42,15 +44,18 @@
       <AdditionalIncludeDirectories>.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWebKit;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;QtCored4.lib;QtGuid4.lib;QtSqld4.lib;QtOpenGLd4.lib;opengl32.lib;glu32.lib;QtNetworkd4.lib;QtWebKitd4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;QtCored4.lib;QtGuid4.lib;QtSqld4.lib;QtOpenGLd4.lib;opengl32.lib;glu32.lib;QtNetworkd4.lib;QtWebKitd4.lib;libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>msvcprtd.lib;MSVCRTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,7 +89,43 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="source\everywhere.cpp" />
+    <ClCompile Include="source\google\protobuf\descriptor.cc" />
+    <ClCompile Include="source\google\protobuf\descriptor.pb.cc" />
+    <ClCompile Include="source\google\protobuf\descriptor_database.cc" />
+    <ClCompile Include="source\google\protobuf\dynamic_message.cc" />
+    <ClCompile Include="source\google\protobuf\extension_set.cc" />
+    <ClCompile Include="source\google\protobuf\extension_set_heavy.cc" />
+    <ClCompile Include="source\google\protobuf\generated_message_reflection.cc" />
+    <ClCompile Include="source\google\protobuf\generated_message_util.cc" />
+    <ClCompile Include="source\google\protobuf\io\coded_stream.cc" />
+    <ClCompile Include="source\google\protobuf\io\gzip_stream.cc" />
+    <ClCompile Include="source\google\protobuf\io\printer.cc" />
+    <ClCompile Include="source\google\protobuf\io\strtod.cc" />
+    <ClCompile Include="source\google\protobuf\io\tokenizer.cc" />
+    <ClCompile Include="source\google\protobuf\io\zero_copy_stream.cc" />
+    <ClCompile Include="source\google\protobuf\io\zero_copy_stream_impl.cc" />
+    <ClCompile Include="source\google\protobuf\io\zero_copy_stream_impl_lite.cc" />
+    <ClCompile Include="source\google\protobuf\message.cc" />
+    <ClCompile Include="source\google\protobuf\message_lite.cc" />
+    <ClCompile Include="source\google\protobuf\reflection_ops.cc" />
+    <ClCompile Include="source\google\protobuf\repeated_field.cc" />
+    <ClCompile Include="source\google\protobuf\service.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\atomicops_internals_x86_msvc.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\common.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\once.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\stringprintf.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\structurally_valid.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\strutil.cc" />
+    <ClCompile Include="source\google\protobuf\stubs\substitute.cc" />
+    <ClCompile Include="source\google\protobuf\unknown_field_set.cc" />
+    <ClCompile Include="source\google\protobuf\wire_format.cc" />
+    <ClCompile Include="source\google\protobuf\wire_format_lite.cc" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\msg.cpp" />
+    <ClCompile Include="source\msg_heartbeat.cpp" />
+    <ClCompile Include="source\msg_nwpb.cpp" />
+    <ClCompile Include="source\nwpb.pb.cc" />
+    <ClCompile Include="source\packet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="everywhere.qrc">

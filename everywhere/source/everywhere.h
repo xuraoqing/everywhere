@@ -11,6 +11,8 @@ class everywhere : public QMainWindow
 public:
 	everywhere(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~everywhere();
+public slots:
+	void display_marker_on_map(void);
 
 private:
 	Ui::everywhereClass ui;

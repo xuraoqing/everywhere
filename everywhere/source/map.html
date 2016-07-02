@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{width:100%;height:100%;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CZMlqfYx5ocB64pdfdweonrNCgGGN8nN"></script>
+	<title>纯文本的信息窗口</title>
+</head>
+<body>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+function add_marker(location)
+{
+// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(120.152976,30.250763);
+	map.centerAndZoom(point,12);
+	map.enableScrollWheelZoom(true);
+	// 创建地址解析器实例
+	var myGeo = new BMap.Geocoder();
+	// 将地址解析结果显示在地图上,并调整地图视野
+	var marker;
+	myGeo.getPoint(location, function(point){
+		if (point) {
+			map.centerAndZoom(point, 16);
+			marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+			//添加marker点击窗口
+			var opts = {
+			  width : 200,     // 信息窗口宽度
+			  height: 100,     // 信息窗口高度
+			  title : "1号液位" , // 信息窗口标题
+			  enableMessage:true,//设置允许信息窗发送短息
+			  message:"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"
+			}
+			var infoWindow = new BMap.InfoWindow("当前液位2.4米", opts);  // 创建信息窗口对象 
+			marker.addEventListener("click", function(){          
+				map.openInfoWindow(infoWindow,point); //开启信息窗口
+			});
+			
+		}else{
+			alert("您选择地址没有解析到结果!");
+		}
+	}, "浙江省");
+
+}
+</script>
