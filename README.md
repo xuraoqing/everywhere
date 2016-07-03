@@ -1,2 +1,0 @@
-# everywhere
-remote monitor system
