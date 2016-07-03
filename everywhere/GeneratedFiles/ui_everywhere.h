@@ -22,6 +22,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
@@ -35,6 +36,8 @@ QT_BEGIN_NAMESPACE
 class Ui_everywhereClass
 {
 public:
+    QAction *action;
+    QAction *action_2;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QGroupBox *groupBox;
@@ -54,6 +57,8 @@ public:
     QVBoxLayout *verticalLayout_2;
     QWebView *webView;
     QMenuBar *menuBar;
+    QMenu *menu;
+    QMenu *menu_2;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -62,6 +67,15 @@ public:
         if (everywhereClass->objectName().isEmpty())
             everywhereClass->setObjectName(QString::fromUtf8("everywhereClass"));
         everywhereClass->resize(1090, 677);
+        action = new QAction(everywhereClass);
+        action->setObjectName(QString::fromUtf8("action"));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\345\256\213\344\275\223"));
+        font.setPointSize(14);
+        action->setFont(font);
+        action_2 = new QAction(everywhereClass);
+        action_2->setObjectName(QString::fromUtf8("action_2"));
+        action_2->setFont(font);
         centralWidget = new QWidget(everywhereClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -168,13 +182,23 @@ public:
         menuBar = new QMenuBar(everywhereClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1090, 23));
+        menu = new QMenu(menuBar);
+        menu->setObjectName(QString::fromUtf8("menu"));
+        menu_2 = new QMenu(menuBar);
+        menu_2->setObjectName(QString::fromUtf8("menu_2"));
         everywhereClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(everywhereClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         everywhereClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        everywhereClass->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(everywhereClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         everywhereClass->setStatusBar(statusBar);
+
+        menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menu_2->menuAction());
+        menu->addAction(action);
+        menu_2->addAction(action_2);
 
         retranslateUi(everywhereClass);
 
@@ -184,6 +208,8 @@ public:
     void retranslateUi(QMainWindow *everywhereClass)
     {
         everywhereClass->setWindowTitle(QApplication::translate("everywhereClass", "everywhere", 0, QApplication::UnicodeUTF8));
+        action->setText(QApplication::translate("everywhereClass", "\347\263\273\347\273\237\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
+        action_2->setText(QApplication::translate("everywhereClass", "\345\205\263\344\272\216\350\275\257\344\273\266", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("everywhereClass", "\350\256\276\345\244\207\345\210\227\350\241\250", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("everywhereClass", "\345\234\260\345\235\200", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("everywhereClass", "\344\274\240\346\204\237\345\231\250\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
@@ -194,6 +220,8 @@ public:
         lineEdit_2->setText(QApplication::translate("everywhereClass", "2.4\347\261\263", 0, QApplication::UnicodeUTF8));
         checkBox->setText(QApplication::translate("everywhereClass", "\345\234\250\347\272\277", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QApplication::translate("everywhereClass", "\345\234\260\345\233\276", 0, QApplication::UnicodeUTF8));
+        menu->setTitle(QApplication::translate("everywhereClass", "\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
+        menu_2->setTitle(QApplication::translate("everywhereClass", "\345\205\263\344\272\216", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

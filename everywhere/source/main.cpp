@@ -1,12 +1,17 @@
 #include<iostream>
 #include<stdint.h>
 #include<process.h>
-#include "everywhere.h"
-#include <QtGui/QApplication>
+#include"everywhere.h"
+#include<QtGui/QApplication>
 #include"msg_nwpb.h"
 #include"packet.h"
+#include "rapidjson/document.h"
+#include "rapidjson/prettywriter.h"
+#include <fstream>
+#include <qerrormessage.h>
 
 using namespace std;
+using namespace rapidjson;
 
 #pragma comment(lib,"ws2_32.lib")
 
@@ -48,9 +53,38 @@ void Server_Thread(void *SocketHandle)
 
 void main_task(void *ptr)
 {
+	//º”‘ÿ√¸¡Ó
+	string file_buf,line;
+	ifstream infile("sys_config.txt",ios::in);
+	if(infile.fail()){
+		exit(-1);
+	}
+	file_buf.clear();
+	while(!infile.eof()){
+		getline(infile,line);
+		file_buf.append(line);
+	}
+	infile.close();
+
+	//jsonΩ‚Œˆ
+	char *json_buf = (char*)malloc(file_buf.length() + 1);
+	memcpy(json_buf,file_buf.data(),file_buf.length());
+	json_buf[file_buf.length()]='\0';
+	Document document;
+	if(document.ParseInsitu((json_buf)).HasParseError()){
+		exit(-1);
+	}
+	assert(document.IsObject());
+	assert(document.HasMember("listen"));
+	string listen_ip;
+	uint16_t listen_port;
+
+	listen_port = document["listen"]["port"].GetInt();
+	listen_ip = document["listen"]["ip"].GetString();
+	free(json_buf);
+
 	WORD wVersionRequested;
 	WSADATA wsaData;
-	uint16_t ListenPort=8001;
 	int err;
 	wVersionRequested = MAKEWORD(2,0);
 	err = WSAStartup(wVersionRequested,&wsaData);
@@ -65,13 +99,14 @@ void main_task(void *ptr)
 	}
 	SOCKET sockSrv = socket(AF_INET,SOCK_STREAM,0);
 	SOCKADDR_IN addrSrv;
-	addrSrv.sin_addr.S_un.S_addr=htonl(INADDR_ANY);
+	
+	addrSrv.sin_addr.S_un.S_addr=inet_addr(listen_ip.c_str());
 	addrSrv.sin_family = AF_INET;
-	addrSrv.sin_port = htons(ListenPort);
+	addrSrv.sin_port = htons(listen_port);
 
 	bind(sockSrv,(SOCKADDR*)&addrSrv,sizeof(SOCKADDR));
 	listen(sockSrv,5);
-	cout<<"server listen at:"<<ListenPort<<endl;
+	cout<<"server listen at:"<<listen_port<<endl;
 	while(1){
 		//SOCKET sockConn=accept(sockSrv,(SOCKADDR*)&(sockInfoPtr->addrClient),&len);
 		SOCKET sockConn=accept(sockSrv,NULL,NULL);
