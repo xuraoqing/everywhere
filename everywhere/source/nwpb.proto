@@ -1,0 +1,621 @@
+// nwp protobuf 
+// v0.1 2012-12-29 wxq
+//
+
+enum Command {
+	LOGIN = 1;
+	LOGOUT = 2;
+	CHANGE_PASSWORD = 3;
+	CHANGE_SESSION_KEY = 4;
+	
+	HEARBEAT = 5;
+	REGISTER = 6;
+	UNREGISTER = 7;
+	GET_NWINFO = 8;
+	GET_NODE_LIST = 9;
+	GET_TOPOLOGY = 10;
+	SET_AUTO_PARAM = 11;
+	GET_AUTO_PARAM = 12;
+	TIME_SYNCH = 13;
+	SUBSCRIBE_NOTIFICATION = 14;
+	REBOOT = 15;
+	GET_CONFIG = 16;
+	SET_CONFIG = 17;
+	QUERY_LOG = 18;
+	
+	BLACK_WHITE_NODE = 19;
+	GET_BLACK_WHITE = 20;
+	SUBSCRIBE_ALL_NODE_DATA = 21;
+	CANCEL_ALL_NODE_DATA = 22;
+	BAT_SUBSCRIBE_NODE_DATA = 23;
+	BAT_CANCEL_NODE_DATA = 24;
+	REQUEST_NODE_DATA_UPLOAD = 25;
+	GET_NODE_REALDATA = 26;
+	GET_UP_DISCON_CACHED_ALARM = 27;
+	GET_NODE_CACHED_DATA = 28;
+	SET_COMMAND_TO_NODE = 29;
+	GET_NODE_SETTINGS = 30;
+	GET_NODE_STATUS = 31;
+	NMP_DATA_UPLOAD = 34;
+	DEVICE_BINDING = 35;
+	GET_TERMINAL_STATUS = 36;
+	SET_TERMINAL_CTRL_CMD = 37;
+	REMOVE_DEVICE_BINDING = 38;
+
+	DOWNLOAD_FIRMWARE = 32;
+	UPGRADE_MODULE = 33;
+	
+	CONTINUE = 46;
+}
+
+message NWPb {
+	optional Request rqst = 1;
+	optional Response rsps = 2; 
+	optional Notify ntf = 3;
+}
+
+message Request {
+	required uint32 session = 1;
+	required uint32 sequence = 2;
+	required Command command = 3;
+	optional bytes content = 4;
+}
+
+message Response {
+	required uint32 session = 1;
+	required uint32 sequence = 2;
+	required Command command = 3;
+	enum Error {
+		NWPB_ERROR_OK = 200; //正常
+		
+		//客户端错误码
+		NWPB_ERROR_DECRYPT_FAILED=421; //解密失败
+		NWPB_ERROR_USER_PASSWORD_INVALID=422; //密码无效
+		NWPB_ERROR_USER_INVALID_STATUS=423; //用户会话状态异常
+		NWPB_ERROR_USER_NOT_EXIST=424; //用户不存在
+		NWPB_ERROR_USER_NOT_LOGIN=425; //用户没有登录
+		NWPB_ERROR_UNSUPPORT_SUBSCRIBE_TYPE=426; //不支持的订阅类型	
+		NWPB_ERROR_INVALID_TIME_VALUE=427; //client给定的时间值，超时值非法
+		NWPB_ERROR_UNSUPPORT_NODELIST_GET_TYPE=428;	//不支持的nodelist获取类型
+		NWPB_ERROR_UNSUPPORT_ENCRYPT_TYPE=429; //不支持的加密类型
+		NWPB_ERROR_NODE_UNSUPPORT_COMMAND=430; //不支持的节点操作命令
+		NWPB_ERROR_INVALID_SENSOR_NO=431; //无效的传感器编号
+		NWPB_ERROR_INVALID_NODE_ID=432; //无效的节点ID
+		NWPB_ERROR_NONE_THRESHOLD_DATA=433; //没有阀值数据
+		NWPB_ERROR_USER_ALREADY_EXIST=434; //用户已经存在
+		NWPB_ERROR_WRONG_OLD_PASSWORD=435; //错误的旧密码
+		NWPB_ERROR_USER_ALREADY_LOGOUT=436; //用户已经logout
+		NWPB_ERROR_INVALID_PROTOCOL_VERSION=437; //协议栈版本不兼容
+		NWPB_ERROR_INVALID_BW_CONFIG_TYPE=438; //不支持的黑白名单配置类型
+		NWPB_ERROR_INVALID_BW_CONFIG_COMMAND=439; //不支持的黑白名单配置操作类型
+		NWPB_ERROR_USER_DELETE_FORBIDDEN=440; //禁止删除该用户
+		NWPB_ERROR_UNSUPPORT_CONFIG_NAME=441; //不支持的配置名称
+		NWPB_ERROR_UNSUPPORT_COMMON_CMD=442; //不支持的通用命令
+		NWPB_ERROR_USERNAME_NULL=443; //用户名为空 443
+		NWPB_ERROR_SENSOR_NOT_EXIST=444; //请求的传感器不存在
+		NWPB_ERROR_INVALID_SEND_INTERVAL=445; //发送间隔无效
+		NWPB_ERROR_ZERO_SEND_INTERVAL=446; //发送间隔不能为0
+		NWPB_ERROR_INVALID_INPUT_PARAM=447; //传入参数错误
+		NWPB_ERROR_SEND_INTERVAL_TOO_SHORT=448; //设置的发送间隔时间太短
+		NWPB_ERROR_SEND_INTERVAL_TOO_LONG=449; //设置的发送间隔时间太长
+		NWPB_ERROR_INVALID_NW_ID=450; //错误的网由ID
+		NWPB_ERROR_SESSION_TIMEOUT=451; //会话超时
+		NWPB_ERROR_SESSION_NOT_EXIST=452; //会话不存在
+		NWPB_ERROR_NODE_NOT_REGISTER=453; //节点未注册，说明节点从来没有注册成功过		
+                NWPB_ERROR_CHOOSE_LONGER_PASSWORD=454; //choose longer password
+
+		//服务端错误码
+		NWPB_ERROR_TOO_MANY_USERS=521; //用户连接到达上限
+		NWPB_ERROR_KICKOUT=522; //用户被踢出
+		NWPB_ERROR_USER_DELETED=523; //用户账号被删除
+		NWPB_ERROR_MSG_SERVICE_ERROR=524; //网由内部消息服务错误
+		NWPB_ERROR_WSN_SERVICE_UNAVAILABLE=525; //WSN服务不可用
+		NWPB_ERROR_WSN_SERVICE_ERROR=526; //WSN服务执行失败
+		NWPB_ERROR_DB_SERVICE_UNAVAILABLE=527; //DB服务不可用
+		NWPB_ERROR_DB_SERVICE_ERROR=528; //DB服务执行失败
+		NWPB_ERROR_USER_SERVICE_UNAVAILABLE=529; //User服务不可用
+		NWPB_ERROR_USER_SERVICE_ERROR=530; //User服务错误
+		NWPB_ERROR_UNSUPPORT_FUNCTION=531; //请求的功能不支持
+		NWPB_ERROR_WSN_NET_TIMEOUT=532; //WSN网络超时
+		NWPB_ERROR_WSN_NODE_SENSOR_NOT_READY=533; //节点传感器信息没有就位
+		NWPB_ERROR_SET_COMMAND_IN_PROCESSSING=534; //节点设置命令在执行中
+		NWPB_ERROR_ONLY_SUPPORT_SET_ONE_THRESHOLD=535; //一个请求智能设置一个节点的一个传感器的一种阀值
+		NWPB_ERROR_WSN_NET_OPERATION_FAILED=536; //WSN 网络层操作失败
+		NWPB_ERROR_LOG_XML_ERROR=537; //Log Xml操作错误
+		NWPB_ERROR_XML_OPERATION_ERROR=538; //xml操作错误
+		NWPB_ERROR_SERVER_LOGIC_ERROR=539; //Server内部逻辑错误
+		NWPB_ERROR_NODE_OPERATION=540; //不支持的节点操作
+		NWPB_ERROR_WAIT_OTHER_MAIN_OPERATION=541; //其他主节点操作正在进行中
+		NWPB_ERROR_MAIN_NODE_FAILED=542; //主节点交互失败
+		NWPB_ERROR_MAIN_NODE_SET_FAILED=543; //主节点设置失败
+		NWPB_ERROR_AUTOREG_UNREGISTERING=544; //正在取消到平台的主动注册
+		NWPB_ERROR_IPC_SERVICE_ERROR=545; //IPC模块逻辑错误
+		NWPB_ERROR_WAIT_WIFI_CONNECTING=546; //等待wifi连接中
+		NWPB_ERROR_GENERAL_OPERATION_TIMEOUT=547; //一般操作超时（网由内部错误）
+		NWPB_ERROR_VWLITE_CONNECT_FAILED=548; //vwlite连接失败（网由内部错误）
+		NWPB_ERROR_VWLITE_DISCONNECT=549; //vwlite断开连接（网由内部错误）
+		NWPB_ERROR_VWLITE_RESPONSE_BAD=550; //vwlite返回包错误（网由内部错误）
+		NWPB_ERROR_DEVICE_BINDING_FAIL=551; //????
+		NWPB_ERROR_DEVICE_BINDING_NO_VC_ACK=552; //????,?????
+		NWPB_ERROR_DEVICE_BINDING_NO_GW_ACK=553; //????,??????
+		NWPB_ERROR_DEVICE_RM_BINDING_FAIL=554; //??????	
+		NWPB_ERROR_DEVICE_UNKNOW_ERROR=555; //unknow error
+	}
+	required Error err = 4;
+	optional bytes content = 5;
+}
+
+message Notify {
+	required uint32 session = 1;
+	required Command command = 2;
+	optional bytes content =3;
+}
+
+
+
+
+//-- parameter --
+
+enum Encrypt {
+	NONE = 1;
+	AES_64 = 2;
+	AES_128 = 3;
+	TEA_16 =4;
+}
+
+enum DeviceType {
+		NW = 1;
+}
+
+enum DeviceModel {
+	M1 = 1; //HW-NW-EB0301-WR(470)
+}
+
+enum ConfigName {
+	LAN = 1;
+	WLAN = 2;
+	WIFI = 3;
+	TIME = 4;
+	WSN = 5;
+	CAN = 6;
+}
+
+enum Enable {
+	DISABLE = 0;
+	ABLE = 1;
+}
+
+enum NodeType {
+	BLACK = 1;
+	WHITE = 2;
+	UNADDED = 3;
+}
+
+enum DataType {
+	ALL = 0;
+	REAL = 1;
+	ALARM = 2;
+}
+
+//--------------- 网由安全 ---------------
+message LoginRqst {
+	required string user_name = 1;
+	required uint32 expires = 2;
+	required Encrypt encrypt = 3;
+	required bytes data = 4;
+}
+message LoginRsps {
+	required uint32 session = 1;
+	required uint32 expires = 2;
+	required uint32 nodes = 3;
+	required uint32 sessions = 4;
+	required bytes nw_id = 5;
+	required Encrypt encrypt = 6;
+}
+
+//message LogoutRqst {}
+//message LogoutRsps {}
+
+message ChangePasswordRqst {
+	required string old_password = 1;
+	required string new_password = 2;
+}
+//message ChangePasswordRsps{}
+
+
+//message ChangeSessionKeyRqst {}
+//message ChangeSessionKeyRsps {}
+
+
+//--------------- 网络、网由管理 ---------------
+message HeartbeatRqst {
+	required uint32 expires = 1;
+	required uint64 time = 2;
+}
+message HeartbeatRsps {
+	required uint32 expires = 1;
+	required uint32 capability = 2;
+	required uint32 nodes = 3;
+	required uint32 sessions = 4;
+}
+
+message RegisterRqst {	
+	required DeviceType type = 1;
+	required string nw_id = 2;
+	required string manufactory = 3;
+	required DeviceModel model = 4;
+	required uint32 nodes = 5;
+	required uint32 session = 6;
+}
+message RegisterRsps {
+	required uint64 time = 1;
+	required uint32 expires = 2;
+}
+
+//message UnregisterRqst {}
+//message UnregisterRsps {}
+
+message GetNWInfoRqst {
+	required bytes nw_id = 1;
+}
+message GetNWInfoRsps {
+	required string manufactory = 1;
+	required DeviceModel model = 2;
+	required uint32 node_count = 3;
+	required string _3G = 4;
+	required string storage = 5;
+	required uint32 space = 6;
+	required bytes nw_id = 7;
+	required string band = 8;
+	required string firmware = 9;
+	required string position = 10;
+	required string gps = 11;
+}
+
+message SetAutoParamRqst {
+	required uint32 enable = 1;
+	required uint32 ip = 2;
+	required uint32 port = 3;
+	required string username = 4;
+	required string password = 5;
+	required uint32 interval = 6;
+}
+//message SetAutoParamRqst {}
+
+//message GetAutoParamRqst {}
+message GetAutoParamRsps {
+	required uint32 enable = 1;
+	required string ip = 2;
+	required uint32 port = 3;
+	required string username = 4;
+	required string password = 5;
+	required uint32 interval = 6;
+}
+
+message SetConfigRqst {
+	required ConfigName name = 1;
+	required string config_file = 2;
+}	
+//message SetConfigRsps {}
+
+message GetConfigRqst {
+	required ConfigName name = 1;
+}
+message GetConfigRsps {
+	required string config_file = 1;
+}
+
+message QueryLogRqst {
+	required LogType type = 1;
+	required uint64 start_time = 2;
+	required uint64 end_time = 3;
+	required uint32 start_line = 4;
+	required uint32 count = 5;
+}
+enum LogType {
+	ALL_TYPE = 1;
+	SECURITY = 2;
+	DEVICE = 3;
+	SYSTEM = 4;
+	BUSINESS = 5;
+} 
+message NWLog {
+	required uint64 time = 1;
+	required LogType type = 2;
+	required string message = 3;
+}
+message QueryLogRsps {
+	required uint32 total_count = 1;
+	repeated NWLog log = 2;
+}
+
+message TimeSynchRqst {
+	required uint64 time = 1;
+	required string ip = 2;
+	required uint32 port = 3;
+	required uint32 revision = 4;
+}
+//message TimeSynchRsps {}
+
+message RebootRqst {
+	required string reason = 1;
+	required uint32 delay = 2;
+}
+//message RebootRsps {}
+
+message GetNodeListRqst {
+	required NodeType type = 1;
+	required uint32 start_line = 2;
+	required uint32 count = 3;
+}
+message GetNodeListRsps {
+	required uint32 total_count = 1;
+	repeated NodeEntry node_entry = 2;
+}
+message NodeEntry {
+	required bytes id = 1;
+	required uint32 status = 2;
+	required uint32 sensor1 = 3;
+	required uint32 sensor2 = 4;
+	required uint32 sensor3 = 5;
+	required uint32 sensor4 = 6;
+	required uint32 sensor5 = 7;
+	required uint32 sensor6 = 8;
+}
+
+message GetNodeStatusRqst {
+	required bytes node_id = 1;
+}
+message GetNodeStatusRsps {
+	required NodeEntry node = 1;
+}
+
+//message GetTopologyRqst {}
+message GetTopologyRsps {
+	repeated Node node = 1;
+}
+message Node {
+	required bytes l_id = 1;
+	required string s_id = 2;
+	required uint32 level = 3;
+	required uint64 time = 4;
+	required ParentNode parent = 5;
+}
+message ParentNode {
+	required bytes l_id = 1;
+	required string s_id = 2;
+	required uint32 level = 3;
+	required uint32 status = 4;
+	required uint32 priority = 5;
+}
+
+message SubscribeNotificationNtf {
+	enum MessageType {
+		NODE_STATE_CHANGE = 1;
+		MEMORY_CARD_FULL = 2;
+		MEMORY_CARD_ANOMALY = 3;
+	}
+	required MessageType message = 1;
+	required uint32 param1 = 2;
+	required uint32 param2 = 3;
+	required string str_msg1 = 4;
+	required string str_msg2 = 5;
+	required uint64 time = 6; 
+}
+
+message DeviceBindingRqst {
+	required string valvectrl_id = 1;
+	required string homegw_id = 2;
+}
+//message DeviceBindingRsps {
+//	required uint32 result = 1;
+//}
+
+message RmDeviceBindingRqst {
+	required string valvectrl_id = 1;
+	required string homegw_id = 2;
+}
+//message RmDeviceBindingRsps {
+//	required uint32 result = 1;
+//}
+
+//--------------- 数据转发 ---------------
+message RequestNodeDataUploadNtf {
+	required string node_id = 1;
+	required DataType type = 2;
+	repeated SensorData data = 3;
+}
+message SensorData {
+	required uint32 sensor_no = 1;
+	required uint32 type = 2;
+	required float data = 3;
+	optional float reserved = 4;
+	required uint64 time = 5;
+}
+
+message NmpDataUploadNtf {
+	required string node_id = 1;
+	required bytes nmp_data = 2;
+}
+
+message ContinueNtf {
+	required uint32 seq = 1;
+}
+
+message GetNodeRealDataRqst {
+	required bytes node_id = 1;
+	required uint32 sensor_no = 2;
+	required uint32 timeout = 3;
+}
+message GetNodeRealDataRsps {
+	required bytes node_id = 1;
+	required DataType type = 2;
+	repeated SensorData s_data = 3;
+}
+
+message SetCommandToNodeRqst {
+	required string node_id = 1;
+	enum Command {
+		ON_OFF = 1;
+		SET_THRESHOLD = 2;
+		SET_INTERVAL = 3;
+		DATA_SWITCH = 4;
+	}
+	required Command cmd = 2;
+	optional uint32 sub_type = 3;
+	optional TypeData node_data = 4;
+	repeated SensorTypeData sensor_data_list = 5;
+}
+message TypeData {
+	optional uint32 type = 1;
+	required float data = 2;
+}
+message SensorTypeData {
+	required uint32 sensor_no = 1;
+	optional uint32 type = 2;
+	required float data = 3;
+}
+//message setCommandToNodeRsps {}
+
+message GetNodeSettingsRqst {
+	required string node_id = 1;
+	enum Command {
+		GET_ON_OFF = 1;
+		GET_THRESHOLD = 2;
+		GET_INTERVAL = 3;
+	}
+	required Command cmd = 2;
+	optional uint32 sub_type = 3;
+	required uint32 sensor_no = 4;
+}
+message GetNodeSettingsRsps {
+	optional TypeData node_data = 1;
+	repeated SensorTypeData sensor_data_list = 2;
+}
+
+message GetUpDisconCachedAlarmRqst {
+	required uint64 begin_time = 1;
+	required uint64 end_time = 2;
+	required uint32 count = 3;
+}
+message GetUpDisconCachedAlarmRsps {
+	repeated CachedAlarmData data = 1;
+}
+message CachedAlarmData {
+	required bytes node_id = 1;
+	required uint32 sensor_no = 2;
+	required DataType type = 3;
+	required float data = 4;
+	optional uint32 reserved = 5;
+	required uint64 time = 6;
+}
+
+message SubscribeAllNodeDataRqst {
+	required DataType type = 1;
+}
+//message SubscribeAllNodeDataRsps {}
+
+message CancelAllNodeDataRqst {
+	required DataType type = 1;
+}
+//message CancelAllNodeDataRsps {}
+
+message BatSubscribeNodeDataRqst {
+	required DataType type = 1;
+	required uint32 count = 2;
+	repeated bytes node_id = 3;
+}
+//message BatSubscribeNodeDataRsps {}
+
+message BatCancelNodeDataRqst {
+	required DataType type = 1;
+	required uint32 count = 2;
+	repeated bytes node_id = 3;
+}
+//message BatCancelNodeDataRsps {}
+
+message BlackWhiteNodeRqst {
+	required NodeType type = 1;
+	enum Command {
+		ADD = 1;
+		DEL = 2;
+	}
+	required Command cmd = 2;
+	repeated string node_id = 3;
+}
+//message BlackWhiteNodeRsps {}
+
+message GetBlackWhiteRqst {
+	required NodeType type = 1;
+}
+message GetBlackWhiteRsps {
+	required uint32 count = 1;
+	repeated string node_id = 2;
+}
+
+enum ReceiveStatus {
+    RECEIVE_OK = 1;
+    RECEIVE_ERROR = 2;
+}
+enum ExecuteStatus{
+    DOWNLOAD_OK = 1;
+    DOWNLOAD_ERROR = 2;
+    UPGRADE_ERROR = 3;
+    UPGRADE_OK= 4;
+}
+message DownloadFirmwareRqst {
+    required string node_id = 1;
+    required string url = 2;
+}
+
+message DownloadFirmwareRsps {
+   required ReceiveStatus receive_status = 1;
+}
+message DownloadFirmwareNtf {
+    required uint32 seq = 1;
+    required ExecuteStatus execute_status = 2;
+}
+
+message  UpgradeModuleRqst {
+   required string module_name = 1;
+}
+
+message UpgradeModuleRsps {
+   required ReceiveStatus receive_status = 1;
+}
+
+message UpgradeModuleNtf {
+    required uint32 seq = 1;
+    required ExecuteStatus execute_status = 2;
+}
+
+message TerminalPort {
+	required uint32 port_num = 1;
+	required uint32 cmd_type = 2;
+}
+message TerminalStatus {
+	required uint32 port_num = 1;
+	required uint32 cmd_type = 2;
+	required bytes data = 3;
+}
+message GetTerminalStatusRqst {
+	required string node_id = 1;
+	repeated TerminalPort port= 2;
+}
+message GetTerminalStatusRsps {
+	required string node_id = 1;
+	repeated TerminalStatus status = 2;
+}
+
+message TerminalCmd {
+	required uint32 port_num = 1;
+	required uint32 cmd_type = 2;
+	required bytes data = 3;
+}
+message SetTerminalCtrlCmdRqst {
+	required string node_id = 1;
+	repeated TerminalCmd cmd_data = 2;
+}
+//message SetTerminalCtrlCmdRsps {}
+
+
