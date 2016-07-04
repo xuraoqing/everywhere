@@ -1,3 +1,6 @@
 *.obj
 *.tlog
 /everywhere project document
+/everywhere/ipch
+everywhere/msvcrt.pdb
+everywhere/wkernel32.pdb
