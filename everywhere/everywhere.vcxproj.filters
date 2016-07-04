@@ -170,6 +170,9 @@
     <ClCompile Include="source\google\protobuf\io\gzip_stream.cc">
       <Filter>Source Files\protobuf\io</Filter>
     </ClCompile>
+    <ClCompile Include="source\msg_sonsor_data.cpp">
+      <Filter>Source Files\protobuf/app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="everywhere.qrc">
@@ -185,6 +188,12 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_everywhere.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\msg_sensor_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\nwpb.pb.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -124,6 +124,7 @@
     <ClCompile Include="source\msg.cpp" />
     <ClCompile Include="source\msg_heartbeat.cpp" />
     <ClCompile Include="source\msg_nwpb.cpp" />
+    <ClCompile Include="source\msg_sonsor_data.cpp" />
     <ClCompile Include="source\nwpb.pb.cc" />
     <ClCompile Include="source\packet.cpp" />
   </ItemGroup>
@@ -167,6 +168,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_everywhere.h" />
+    <ClInclude Include="source\msg_sensor_data.h" />
+    <ClInclude Include="source\nwpb.pb.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-#ifndef __MSG_HEARTBEAT_H__
+#ifndef MSG_HEARTBEAT_H_
 #include<string>
 #include<vector>
 #include"msg_object.h"

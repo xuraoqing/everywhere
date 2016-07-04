@@ -15,12 +15,12 @@ using namespace rapidjson;
 
 #pragma comment(lib,"ws2_32.lib")
 
-void Server_Thread(void *SocketHandle);
-void main_task(void *ptr);
+void gcs_thread(void *SocketHandle);
+void main_loop(void *ptr);
 
 int ConCount=0;
 
-void Server_Thread(void *SocketHandle)
+void gcs_thread(void *SocketHandle)
 {
 	uint8_t recvBuf[512];int32_t recvLen;
 	string  PBBuf;
@@ -51,7 +51,7 @@ void Server_Thread(void *SocketHandle)
 	_endthread();
 }
 
-void main_task(void *ptr)
+void main_loop(void *ptr)
 {
 	//¼ÓÔØÃüÁî
 	string file_buf,line;
@@ -120,14 +120,14 @@ void main_task(void *ptr)
 		PacketIO *SockInfoPtr= new PacketIO(ConCount); 
 		SockInfoPtr->SockConn = sockConn;
 		SockInfoPtr->Num = ConCount;
-		_beginthread(Server_Thread,0,SockInfoPtr);
+		_beginthread(gcs_thread,0,SockInfoPtr);
 	}
 	WSACleanup();
 }
 
 int main(int argc, char *argv[])
 {
-	_beginthread(main_task,0,NULL);
+	_beginthread(main_loop,0,NULL);
 	QApplication a(argc, argv);
 	everywhere w;
 	w.show();
